@@ -25,7 +25,7 @@ def create_user(user: schemas.UserCreate):
         raise HTTPException(status_code=500, detail="ToDo server error")
    
 
-
+# POST can handle request body securely
 @router.post('/login', response_model=schemas.Token)
 def login(user_credentials: OAuth2PasswordRequestForm = Depends()):
 

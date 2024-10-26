@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { api } from '../api';
 import { useNavigate } from 'react-router-dom';
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+
 
 const Auth = () => {
   const [username, setUsername] = useState('');
@@ -38,14 +41,16 @@ const Auth = () => {
   };
 
   return (
-    <form>
-      <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required />
-      <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
-      <div>
-        <button type="submit" onClick={handleLogin}>Log In</button>
-        <button onClick={handleSignUp}>Sign Up</button>
+    <div className="flex items-center justify-center min-h-screen">
+    <form className="flex flex-col w-full max-w-sm space-y-4">
+      <Input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required />
+      <Input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
+      <div className="flex justify-center space-x-4">
+        <Button type="submit" onClick={handleLogin}>Sign In</Button>
+        <Button variant="secondary" onClick={handleSignUp}>Sign Up</Button>
       </div>
     </form>
+    </div>
   );
 };
 

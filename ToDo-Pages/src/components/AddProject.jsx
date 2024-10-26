@@ -7,7 +7,7 @@ const AddProject = ({ onProjectAdded }) => {
   const handleAddProject = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post('/projects', { title });
+      const response = await api.post('/projects/create', { title });
       onProjectAdded(response.data);
     } catch (error) {
       console.error('Error adding project:', error);

@@ -2,7 +2,7 @@
 from pydantic import BaseModel, EmailStr, constr
 from pydantic.types import conint
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 
 class UserCreate(BaseModel):
@@ -30,36 +30,33 @@ class TokenData(BaseModel):
     id: Optional[int] = None
 
 
-
-
-
-
-
-
 class ProjectBase(BaseModel):
     title: str
-    content: str
-    published: bool=True
+    todos: Optional[List[int]] = None
+    #published: bool=True
 
-class ProjectCreate(ProjectBase): # owner_id is also needed for the table posts, we will take it from the token 
+class ProjectCreate(ProjectBase): # owner_id is take from jwt 
     pass
-
 
 class Project(ProjectBase):
     id: int
-    created_at: datetime
     owner_id: int
-    owner: UserOut # returns this pydantic model
+    created_at: datetime
+    #owner: UserOut # returns this pydantic model
 
     class Config:
         orm_mode = True
 
 class ProjectOut(BaseModel):
     Project: Project
-    votes: int
 
     class Config:
         orm_mode = True
 
 
+class TodoBase(BaseModel):
+    description: str
+    status: bool=False
 
+class TodoCreate(TodoBase): # no owner_id
+    pass
