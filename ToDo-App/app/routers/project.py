@@ -13,13 +13,13 @@ router = APIRouter(
 
 @router.get("/", response_model=List[schemas.ProjectOut])
 def get_projects(current_user: int = Depends(oauth2.get_current_user)):
-    cursor.execute("""SELECT * FROM projects WHERE owner_id = %s""", (current_user,))        
+    cursor.execute("""SELECT * FROM projects WHERE owner_id = %s ORDER BY created_at""", (current_user,))        
     projects = cursor.fetchall()
     return [{"Project": project} for project in projects]
 
 @router.post("/create", status_code=status.HTTP_201_CREATED, response_model=schemas.ProjectOut)
 def create_project(project: schemas.ProjectCreate, current_user: int = Depends(oauth2.get_current_user)):
-    cursor.execute("""INSERT INTO projects (title, owner_id, todos) VALUES (%s, %s, %s) RETURNING *""", (project.title, current_user, project.todos))
+    cursor.execute("""INSERT INTO projects (title, owner_id, todos) VALUES (%s, %s, %s) RETURNING *""", (project.title, current_user, []))
     new_project = cursor.fetchone()
     conn.commit()
     return {"Project": new_project}
@@ -33,9 +33,16 @@ def get_project(project_id: int, current_user: int = Depends(oauth2.get_current_
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
     
     # Get the todos
-    cursor.execute("""SELECT * FROM todos WHERE id = ANY(%s)""", (project['todos'],))
+    cursor.execute("""SELECT * FROM todos WHERE id = ANY(%s) ORDER BY created_at""", (project['todos'],))
     todos = cursor.fetchall()
-    return [{"Todo": todo} for todo in todos]
+    
+    response = {
+        "title": project["title"],
+        "todos": [{"Todo": todo} for todo in todos]
+    }
+    
+    return response
+    #return [{"Todo": todo} for todo in todos]
 
 @router.put("/{project_id}/rename", response_model=schemas.ProjectOut)
 def rename_project(project_id: int, project: schemas.ProjectBase, current_user: int = Depends(oauth2.get_current_user)):
@@ -78,7 +85,7 @@ def create_todo(project_id: int, todo: schemas.TodoCreate, current_user: int = D
 
 # works for both edit and mark as done todo
 @router.put("/{project_id}/todos/update/{todo_id}", response_model=schemas.ProjectOut)
-def update_todo(project_id: int, todo_id: int, todo: schemas.TodoBase, current_user: int = Depends(oauth2.get_current_user)):
+def update_todo(project_id: int, todo_id: int, todo: schemas.TodoUpdate, current_user: int = Depends(oauth2.get_current_user)):
     # Check if the project exists and belongs to the current user
     cursor.execute("""SELECT * FROM projects WHERE id = %s AND owner_id = %s""", (project_id, current_user))
     project = cursor.fetchone()

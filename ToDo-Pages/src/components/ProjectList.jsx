@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { api } from '../api';
 import { useNavigate } from 'react-router-dom';
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -20,17 +22,15 @@ const ProjectList = () => {
     fetchProjects();
   }, []);
 
-  const handleProjectAdded = (newProject) => {
-    // Use spread operator to include the new project at the beginning of the list
-    setProjects([...projects, newProject.Project]); 
-    setTitle(''); // Clear the input after adding
-  };
-
-  const handleAddProject = async (e) => {
+  const handleProjectAdd = async (e) => {
     e.preventDefault();
     try {
       const response = await api.post('/projects/create', { title });
-      handleProjectAdded(response.data); // Add the new project to the list
+      alert('Project added!');
+      //handleProjectAdded(response.data); // Add the new project to the list
+      setProjects([...projects, response.data.Project]); 
+      setTitle(''); // Clear the input
+
     } catch (error) {
       console.error('Error adding project:', error);
     }
@@ -41,25 +41,25 @@ const ProjectList = () => {
   };
 
   return (
-    <div>
-      <h1>Your Projects</h1>
+    <div className="flex flex-col items-center space-y-6">
+      <h1 className="text-2xl font-bold mt-6">Your Projects</h1>
 
       {/* Add Project */}
-      <form onSubmit={handleAddProject}>
-        <input 
+      <form onSubmit={handleProjectAdd} className="flex space-x-4 max-w-sm">
+        <Input 
           type="text" 
           value={title} 
           onChange={e => setTitle(e.target.value)} 
           placeholder="Project Title" 
-          required 
+          required
         />
-        <button type="submit">Add Project</button>
+        <Button type="submit">Add Project</Button>
       </form>
 
       {/* List of Projects */}
-      <ul>
+      <ul className="w-full max-w-sm space-y-4">
         {projects.map(project => (
-          <li key={project.id}>
+          <li key={project.id} className="flex justify-center">
             <button onClick={() => handleProjectClick(project.id)}>{project.title}</button>
           </li>
         ))}

@@ -60,3 +60,7 @@ class TodoBase(BaseModel):
 
 class TodoCreate(TodoBase): # no owner_id
     pass
+
+class TodoUpdate(BaseModel):
+    description: Optional[str] = None
+    status: Optional[bool] = None
