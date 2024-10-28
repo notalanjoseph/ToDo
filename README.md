@@ -17,8 +17,8 @@ A full stack web application to manage Project ToDos. Frameworks, Libraries and 
 5. **Detailed Project View**- Click on a Project to see it's details including tasks(todos) for that project.
 6. **Rename Project**- Rename your Project from the Detailed Project View page.
 7. **Todo Creation**- Add a new Todo by providing a Description.
-8. **Update Description**- Change the Description for an existing Todo.
-9. **Update Status**- Mark a ToDo as complete or pending using the checkbox.
+8. **Update Description**- Change the Description for an existing Todo, then click Update.
+9. **Update Status**- Mark a ToDo as complete or pending using the checkbox, then click Update.
 10. **ToDo Deletion**- Delete a ToDo by clicking the Delete button.
 11. **Export as Gist**- Download a <project_name>.md file containing Summary of the Project.
  
