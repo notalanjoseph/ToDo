@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Body, HTTPException, Response, status, Depends, APIRouter
+from fastapi import HTTPException, Response, status, Depends, APIRouter
 from .. import schemas, utils, oauth2
 from ..database import conn, cursor
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm

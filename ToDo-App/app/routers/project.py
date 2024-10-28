@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Body, HTTPException, Response, status, Depends, APIRouter
+from fastapi import HTTPException, Response, status, Depends, APIRouter
 from typing import List, Optional
 from .. import schemas, oauth2
 from ..database import conn, cursor
@@ -42,7 +42,6 @@ def get_project(project_id: int, current_user: int = Depends(oauth2.get_current_
     }
     
     return response
-    #return [{"Todo": todo} for todo in todos]
 
 @router.put("/{project_id}/rename", response_model=schemas.ProjectOut)
 def rename_project(project_id: int, project: schemas.ProjectBase, current_user: int = Depends(oauth2.get_current_user)):
@@ -93,7 +92,7 @@ def get_markdown(project_id: int, current_user: int = Depends(oauth2.get_current
     with open(file_path, "w") as file:
         file.write(md_content)
 
-# Return the markdown file as a downloadable response
+    # Return the markdown file as a downloadable response
     return FileResponse(path=file_path, filename=file_path, media_type='text/markdown')
 
 

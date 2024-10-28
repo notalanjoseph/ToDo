@@ -5,7 +5,7 @@ A full stack web application to manage Project ToDos. Frameworks, Libraries and 
 **Front-end**: React.js with Tailwind css and ShadCN Ui.
 
 
-### Watch the Demo:
+### Watch the Demo Video:
 [![Demo Video Link](thumbnail.png)](https://drive.google.com/file/d/1G5Pzvje80AKV79pZaNX1i4ofnhONaupd/preview)
 
 ## Features
@@ -104,7 +104,7 @@ cd ToDo
 
 ### 3. Back-end
 
-- **Python**: Download and install version 3.8 or newer from [Python.org](https://python.org/). Check Python & pip installation:
+- **Python**: Download and install a version between 3.8 and 3.11 from [Python.org](https://python.org/). Check Python & pip installation:
     ```bash
     python --version
     pip --version
@@ -118,3 +118,8 @@ cd ToDo
     ```bash
     uvicorn app.main:app --reload
     ```
+
+
+## API endpoints details
+
+After starting the FastAPI server with uvicorn, go to `http://127.0.0.1:8000/docs` to see the request and response associated with each endpoints.
