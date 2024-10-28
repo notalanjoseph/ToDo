@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Body, HTTPException, Response, status, Depends, APIRouter
-from sqlalchemy.orm import Session
 from typing import List, Optional
 from .. import schemas, oauth2
 from ..database import conn, cursor
 from datetime import datetime, timezone
+from fastapi.responses import FileResponse
 
 router = APIRouter(
     prefix="/projects",
@@ -57,6 +57,45 @@ def rename_project(project_id: int, project: schemas.ProjectBase, current_user: 
     updated_project = cursor.fetchone()
     conn.commit()
     return {"Project": updated_project}
+
+@router.get("/{project_id}/markdown")#, response_model=List[schemas.TodoOut])
+def get_markdown(project_id: int, current_user: int = Depends(oauth2.get_current_user)):
+    # Check if the project exists and belongs to the current user
+    cursor.execute("""SELECT * FROM projects WHERE id = %s AND owner_id = %s""", (project_id, current_user))
+    project = cursor.fetchone()
+    if not project:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Project not found")
+    
+    # Get the todos
+    cursor.execute("""SELECT * FROM todos WHERE id = ANY(%s) ORDER BY created_at""", (project['todos'],))
+    todos = cursor.fetchall()
+
+    completed_todos = []
+    pending_todos = []
+    for todo in todos:
+        if todo['status']:
+            completed_todos.append(todo['description'])
+        else:
+            pending_todos.append(todo["description"])    
+
+    # Create the markdown content
+    md_content = f"# {project['title']}\n\n"
+    md_content += f"**Summary:**  {len(completed_todos)} / {len(todos)} todos completed.\n\n"
+    md_content += f"## Pending \n"
+    for todo in pending_todos:
+        md_content += f"- [ ] {todo}\n"
+    md_content += f"## Completed \n"
+    for todo in completed_todos:
+        md_content += f"- [x] {todo}\n"
+
+    # Write the content to a md file
+    file_path = f"{project['title']}.md"
+    with open(file_path, "w") as file:
+        file.write(md_content)
+
+# Return the markdown file as a downloadable response
+    return FileResponse(path=file_path, filename=file_path, media_type='text/markdown')
+
 
 
 

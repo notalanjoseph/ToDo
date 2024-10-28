@@ -40,6 +40,26 @@ const ProjectPage = () => {
     }
   };
 
+const handleExport = async () => {
+  try {
+    const response = await api.get(`/projects/${id}/markdown`, {
+      responseType: 'blob' // Specify that you're expecting a blob (binary) response
+    });
+    // Create a URL for the blob
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    // Create a link and trigger a download
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `${projectTitle}.md`); // Download as .md file
+    document.body.appendChild(link);
+    link.click();
+    // Clean up by removing the link after the download starts
+    link.remove();
+  } catch (error) {
+    console.error('Error exporting project:', error);
+  }
+};
+
   const handleTodoAdd = async () => {
     try {
       await api.post(`/projects/${id}/todos/create`, { description: newTodo });
@@ -78,6 +98,7 @@ const ProjectPage = () => {
 
   return (
     <div>
+
       <div className="flex flex-col items-center">
         <h1 className="text-2xl font-bold m-6">Detailed Project View</h1>
         <div className="flex items-center space-x-4 mb-6">
@@ -90,6 +111,7 @@ const ProjectPage = () => {
             placeholder="Project Name"
           />
           <Button onClick={handleRename}>Rename</Button>
+          <Button onClick={handleExport}>Export</Button>
         </div>
       </div>
 
