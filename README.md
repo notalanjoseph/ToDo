@@ -57,7 +57,7 @@ cd ToDo
     ```bash
     CREATE TABLE IF NOT EXISTS public.users
     (
-        id integer NOT NULL DEFAULT nextval('users_id_seq'::regclass),
+        id serial NOT NULL,
         email character varying(25) COLLATE pg_catalog."default",
         password character varying COLLATE pg_catalog."default" NOT NULL,
         created_at timestamp with time zone NOT NULL DEFAULT now(),
@@ -71,7 +71,7 @@ cd ToDo
     ```bash
     CREATE TABLE IF NOT EXISTS public.projects
     (
-        id integer NOT NULL DEFAULT nextval('projects_id_seq'::regclass),
+        id serial NOT NULL,
         title character varying(25) COLLATE pg_catalog."default" NOT NULL,
         owner_id integer NOT NULL,
         todos integer[],
@@ -89,7 +89,7 @@ cd ToDo
     ```bash
     CREATE TABLE IF NOT EXISTS public.todos
     (
-        id integer NOT NULL DEFAULT nextval('todos_id_seq'::regclass),
+        id serial NOT NULL,
         description character varying(50) COLLATE pg_catalog."default" NOT NULL,
         status boolean NOT NULL DEFAULT false,
         created_at timestamp with time zone NOT NULL DEFAULT now(),
