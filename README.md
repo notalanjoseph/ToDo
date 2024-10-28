@@ -5,8 +5,8 @@ A full stack web application to manage Project ToDos. Frameworks, Libraries and 
 **Front-end**: React.js with Tailwind css and ShadCN Ui.
 
 
-**Watch the Demo:**
-<iframe src="https://drive.google.com/file/d/1G5Pzvje80AKV79pZaNX1i4ofnhONaupd/preview" width="640" height="280" allow="autoplay"></iframe>
+### Watch the Demo:
+[![Demo Video Link](thumbnail.png)](https://drive.google.com/file/d/1G5Pzvje80AKV79pZaNX1i4ofnhONaupd/preview)
 
 ## Features
 
