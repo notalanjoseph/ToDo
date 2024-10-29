@@ -2,7 +2,8 @@
  
 A full stack web application to manage Project ToDos. Frameworks, Libraries and Tools used:<br>
 **Back-end**: FastAPI with PostgreSQL database.<br>
-**Front-end**: React.js with Tailwind css and ShadCN Ui.
+**Front-end**: React.js with Tailwind css and ShadCN Ui.<br>
+This project is done as a Hatio take home challenge.
 
 
 ### Watch the Demo Video:
