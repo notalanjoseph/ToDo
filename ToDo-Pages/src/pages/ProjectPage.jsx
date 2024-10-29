@@ -117,7 +117,7 @@ const handleExport = async () => {
 
       <ul>
         {todos.map(todo => (
-          <li key={todo.id} className="flex items-center space-x-4 space-y-2">
+          <li key={todo.id} className="flex items-center space-x-4 space-y-2 ml-10">
             <Input
               type="text"
               value={todo.description}
@@ -152,7 +152,7 @@ const handleExport = async () => {
       </ul>
 
       {/* add Todo */}
-      <div className="flex items-center space-x-4 mt-4">
+      <div className="flex items-center space-x-4 mt-4 ml-10">
         <Input
           type="text"
           value={newTodo}
