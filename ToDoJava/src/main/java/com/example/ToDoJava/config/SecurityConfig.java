@@ -14,7 +14,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())  // Disable CSRF for development
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/**").permitAll()  // Allow all /api/ routes
+                .requestMatchers("/**").permitAll()  // Allow all /api/ routes
                 .anyRequest().authenticated()  // Require authentication for other routes
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))  // No session management
