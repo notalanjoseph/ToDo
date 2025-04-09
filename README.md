@@ -7,7 +7,7 @@ This project is done as a Hatio take home challenge.
 
 
 ### Watch the Demo Video:
-[![Demo Video Link](thumbnail.png)](https://drive.google.com/file/d/1G5Pzvje80AKV79pZaNX1i4ofnhONaupd/preview)
+[![Demo Video Link](thumbnail.png)](https://drive.google.com/file/d/1ec39eCgKm5PZa_ikjX5s8T1mnHwOnL0E/preview)
 
 ## Features
 
